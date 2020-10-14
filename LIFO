@@ -1,0 +1,80 @@
+#include <stdio.h> 
+#include <stdlib.h> 
+#include <locale.h> 
+
+
+ typedef struct {
+    int tam;
+    int topo;
+    int *vet;
+}tp_pilha;
+
+int pilha_vazia(tp_pilha *pilha){
+    if(pilha->topo==-1){
+        return 1;
+    }
+    else
+        return 0;
+}
+void inserindo(tp_pilha *pilha){
+    int numero;
+    pilha->tam++;
+
+    pilha->vet = (int*) realloc(pilha->vet,pilha->tam*sizeof(int));
+
+    printf("insira numero:");
+    scanf("%i",&numero);
+
+    pilha->topo++;
+    pilha->vet[pilha->topo]=numero;
+}
+void excluindo(tp_pilha *pilha){
+    if(!pilha_vazia(pilha)){
+        pilha->vet[pilha->topo] =NULL;
+        pilha->topo--;
+    }
+    else
+        printf("pilha vazia!\n");
+}
+
+void listar(tp_pilha *pilha){
+    int i;
+    int n = pilha->tam;
+
+    if(!pilha_vazia(pilha)){
+        for(i=n-1;i>=0;i--){
+            if(pilha->vet[i]!=0){
+            printf("%i\n",pilha->vet[i]);
+       }
+    }
+    }
+    else
+         printf("pilha vazia!\n");
+}
+
+int main(void){
+
+    char verifica;
+
+     tp_pilha pilha={0,-1,0};
+
+    while(verifica!='s'){
+        printf("(i)nserir/(l)istar/(e)xcluir/(s)air: ");
+        fflush(stdin);
+        scanf("%c",&verifica);
+
+        switch(verifica){
+            case'i':
+                inserindo(&pilha);
+                break;
+            case'e':
+                excluindo(&pilha);
+                break;
+            case'l':
+                listar(&pilha);
+                break;
+            default:
+                return 0;
+        }
+  }
+}
